@@ -1,18 +1,27 @@
-# Development Rules for AI Agent
+# Autonomous AI Development Rules
 
-## Issue & Branch Rules
+## 1. Core Principles
+- The human's role is strictly limited to "defining requirements" and "deciding on PR merges."
+- The agent must autonomously handle the entire cycle: reviewing issues, creating branches, implementing code, verifying changes, and opening PRs.
 
-- タスク着手時は必ず対象のIssue番号を確認し、ブランチ `feature/issue-<番号>` を切って作業すること。
-- 作業完了時は必ず `pnpm lint` および `pnpm build` がローカルで通ることを確認すること。
+## 2. Issue Creation Rules
+- When instructed to create an issue via chat, use the `gh issue create` command.
+- Title prefixes: `feat:`, `fix:`, `chore:`, `refactor:`
+- The body must include: "Purpose," "Implementation Requirements," and "Acceptance Criteria."
 
-## Pull Request Rules
+## 3. Branching & Development Rules
+- Always branch off from the latest `dev` branch.
+- Branch naming convention: `feature/issue-<number>-<brief-slug>`
+- Execute commands non-interactively (no prompts waiting for user input) and default to `pnpm`.
 
-- PR作成時は本文の冒頭に `Closes #<番号>` を必ず含めること。
-- PR本文には「変更概要」「実装した主要な関数/コンポーネント」「テスト結果」を簡潔に記載すること。
-- GitHub CLI（gh）を使用してPRを作成すること。
+## 4. Verification & Quality Assurance Rules
+- After code changes, always run the following locally and ensure it passes:
+  `pnpm lint && pnpm build`
+- If errors occur, analyze the error logs autonomously and iterate on fixes until all checks pass.
 
-## Project Phases
-
-- Phase 1: ニッチ特化の最小構成、DMM APIバッチ連携、Next.js ISR構築、インデックス検証
-- Phase 2: 最安値履歴トラッカー、CVR改善、通知導線
-- Phase 3: カテゴリ横展開、マルチドメイン自動化
+## 5. Pull Request Rules
+- Always set the target (base) branch to `dev` (`--base dev`).
+- Match the PR title to the issue title.
+- The first line of the PR body must state: `Closes #<issue-number>`
+- Command template:
+  `gh pr create --base dev --title "..." --body "Closes #<number> ... [Summary and Test Results]"`
