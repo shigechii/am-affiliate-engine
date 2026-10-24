@@ -1,69 +1,95 @@
-import Image from "next/image";
+import Link from "next/link";
+import { getItems } from "@/lib/items/service";
+import { SortOption } from "@/types/item";
+import { ItemFilterBar } from "@/components/ItemFilterBar";
+import { ItemGrid } from "@/components/ItemGrid";
+import { Pagination } from "@/components/Pagination";
 
-export default function Home() {
+interface PageProps {
+  searchParams: Promise<{
+    q?: string;
+    sort?: string;
+    page?: string;
+  }>;
+}
+
+export default async function HomePage({ searchParams }: PageProps) {
+  const resolvedParams = await searchParams;
+  const query = resolvedParams.q || "";
+  const sort = (resolvedParams.sort as SortOption) || "latest";
+  const page = parseInt(resolvedParams.page || "1", 10);
+
+  const result = await getItems({
+    query,
+    sort,
+    page,
+    limit: 24,
+  });
+
   return (
-    <div className="flex flex-1 flex-col items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex w-full max-w-3xl flex-1 flex-col items-center justify-between bg-white px-16 py-32 sm:items-start dark:bg-black">
-        <Image
-          className="h-5 w-[100px] dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl leading-10 font-semibold tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
+    <div className="min-h-screen bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100">
+      {/* Header Banner */}
+      <header className="border-b border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
+          <Link href="/" className="flex items-center gap-2">
+            <span className="rounded-lg bg-rose-600 p-1.5 text-lg font-black text-white">
+              DMM
+            </span>
+            <span className="text-xl font-bold tracking-tight">
+              セール＆最安値トラッカー
+            </span>
+          </Link>
+          <nav className="flex items-center gap-4 text-sm font-medium text-zinc-600 dark:text-zinc-400">
+            <Link href="/" className="hover:text-rose-600 dark:hover:text-rose-400">
+              商品一覧
+            </Link>
+            <a
+              href="https://affiliate.dmm.com/"
+              target="_blank"
+              rel="nofollow sponsored"
+              className="hidden hover:text-rose-600 sm:inline dark:hover:text-rose-400"
+            >
+              DMM公式 ↗
+            </a>
+          </nav>
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Page Title & Subtitle */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
+            DMMアフィリエイト商品一覧・価格変動追跡
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
+            最新のDMMセール情報・大幅割引商品・価格更新をリアルタイムで掲載中 ({result.totalCount.toLocaleString()}件)
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="bg-foreground text-background flex h-12 w-full items-center justify-center gap-2 rounded-full px-5 transition-colors hover:bg-[#383838] md:w-[158px] dark:hover:bg-[#ccc]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="h-[14px] w-4 dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] md:w-[158px] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+
+        {/* Filter & Search Bar */}
+        <ItemFilterBar />
+
+        {/* Product Grid */}
+        <ItemGrid items={result.items} />
+
+        {/* Pagination */}
+        <Pagination
+          currentPage={result.currentPage}
+          totalPages={result.totalPages}
+          query={query}
+          sort={sort}
+        />
       </main>
+
+      {/* Footer */}
+      <footer className="mt-16 border-t border-zinc-200 bg-white py-8 text-center text-xs text-zinc-500 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400">
+        <p>© {new Date().getFullYear()} DMM セール＆最安値トラッカー. All rights reserved.</p>
+        <p className="mt-1">
+          本サイトはDMMアフィリエイトプログラムに参加しており、掲載リンク経由での購入に対して紹介料を得る場合があります。
+        </p>
+      </footer>
     </div>
   );
 }
+
