@@ -17,7 +17,7 @@ async function syncDmmItems() {
 
   try {
     const response = await fetchDmmItems({ hits: 50 });
-    const fetchedItems: DmmItem[] = response.result.items || [];
+    const fetchedItems: Array<DmmItem> = response.result.items || [];
 
     console.log(`[Sync Batch] Fetched ${fetchedItems.length} items from DMM API.`);
 
