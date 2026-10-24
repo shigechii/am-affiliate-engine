@@ -11,7 +11,7 @@
 
 ## 3. Branching & Development Rules
 - Always branch off from the latest `dev` branch.
-- Branch naming convention: `feature/issue-<number>-<brief-slug>`
+- Branch naming convention: `issue-<number>` (例: `issue-7`)
 - Execute commands non-interactively (no prompts waiting for user input) and default to `pnpm`.
 
 ## 4. Verification & Quality Assurance Rules
