@@ -8,10 +8,10 @@ export interface DmmPrices {
   price?: string;
   list_price?: string;
   deliveries?: {
-    delivery?: {
+    delivery?: Array<{
       type?: string;
       price?: string;
-    }[];
+    }>;
   };
 }
 
@@ -26,14 +26,14 @@ export interface DmmItemInfoDetail {
 }
 
 export interface DmmIteminfo {
-  genre?: DmmItemInfoDetail[];
-  maker?: DmmItemInfoDetail[];
-  actress?: DmmItemInfoDetail[];
-  author?: DmmItemInfoDetail[];
-  label?: DmmItemInfoDetail[];
-  series?: DmmItemInfoDetail[];
-  director?: DmmItemInfoDetail[];
-  keyword?: DmmItemInfoDetail[];
+  genre?: Array<DmmItemInfoDetail>;
+  maker?: Array<DmmItemInfoDetail>;
+  actress?: Array<DmmItemInfoDetail>;
+  author?: Array<DmmItemInfoDetail>;
+  label?: Array<DmmItemInfoDetail>;
+  series?: Array<DmmItemInfoDetail>;
+  director?: Array<DmmItemInfoDetail>;
+  keyword?: Array<DmmItemInfoDetail>;
 }
 
 export interface DmmItem {
@@ -62,7 +62,7 @@ export interface DmmItemListResponse {
     result_count: number;
     total_count: number;
     first_position: number;
-    items?: DmmItem[];
+    items?: Array<DmmItem>;
   };
 }
 
@@ -76,13 +76,13 @@ export interface DmmService {
   id: string;
   name: string;
   code: string;
-  floor?: DmmFloor[];
+  floor?: Array<DmmFloor>;
 }
 
 export interface DmmSite {
   name: string;
   code: string;
-  service?: DmmService[];
+  service?: Array<DmmService>;
 }
 
 export interface DmmFloorListResponse {
@@ -91,7 +91,7 @@ export interface DmmFloorListResponse {
   };
   result: {
     status: number;
-    site?: DmmSite[];
+    site?: Array<DmmSite>;
   };
 }
 
@@ -111,7 +111,8 @@ export interface DmmGenreListResponse {
     result_count: number;
     total_count: number;
     first_position: number;
-    genre?: DmmGenre[];
+    genre?: Array<DmmGenre>;
   };
 }
+
 

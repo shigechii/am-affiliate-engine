@@ -25,3 +25,7 @@
 - The first line of the PR body must state: `Closes #<issue-number>`
 - Command template:
   `gh pr create --base dev --title "..." --body "Closes #<number> ... [Summary and Test Results]"`
+
+## 6. TypeScript Coding Conventions
+- Standardize on using `Array<Type>` instead of `Type[]` for array type declarations (e.g., `Array<string>`, `Array<DmmItem>`).
+

@@ -6,7 +6,7 @@ import {
 } from "@/types/dmm";
 
 export function getSampleDmmResponse(): DmmItemListResponse {
-  const sampleItems: DmmItem[] = [
+  const sampleItems: Array<DmmItem> = [
     {
       content_id: "sample_dmm_001",
       title: "サンプルDMM限定コミック全巻セット",
