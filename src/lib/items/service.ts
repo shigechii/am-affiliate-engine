@@ -1,7 +1,7 @@
 import { db } from "@/db";
 import { items } from "@/db/schema";
 import { Item, GetItemsParams, GetItemsResult, SortOption } from "@/types/item";
-import { like, desc, asc, count } from "drizzle-orm";
+import { like, desc, asc, count, eq } from "drizzle-orm";
 
 const SAMPLE_ITEMS: Array<Item> = [
   {
@@ -66,7 +66,27 @@ const SAMPLE_ITEMS: Array<Item> = [
   },
 ];
 
+export async function getItemById(id: string): Promise<Item | null> {
+  try {
+    const fetched = await db
+      .select()
+      .from(items)
+      .where(eq(items.id, id))
+      .limit(1);
+
+    if (fetched.length > 0) {
+      return fetched[0] as Item;
+    }
+  } catch {
+    console.warn(`[Items Service] DB query failed for item ${id}. Fallback checking sample list.`);
+  }
+
+  const sampleMatch = SAMPLE_ITEMS.find((item) => item.id === id);
+  return sampleMatch || null;
+}
+
 export async function getItems(params: GetItemsParams = {}): Promise<GetItemsResult> {
+
   const queryText = params.query?.trim() || "";
   const sort: SortOption = params.sort || "latest";
   const limit = params.limit || 24;
