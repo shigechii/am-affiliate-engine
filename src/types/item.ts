@@ -23,6 +23,13 @@ export interface GetItemsParams {
   limit?: number;
 }
 
+export interface PriceHistoryRecord {
+  id: string;
+  itemId: string;
+  price: number;
+  recordedAt: Date;
+}
+
 export interface GetItemsResult {
   items: Array<Item>;
   totalCount: number;

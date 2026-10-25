@@ -1,6 +1,12 @@
 import { db } from "@/db";
-import { items } from "@/db/schema";
-import { Item, GetItemsParams, GetItemsResult, SortOption } from "@/types/item";
+import { items, priceHistory } from "@/db/schema";
+import {
+  Item,
+  GetItemsParams,
+  GetItemsResult,
+  SortOption,
+  PriceHistoryRecord,
+} from "@/types/item";
 import { like, desc, asc, count, eq } from "drizzle-orm";
 
 const SAMPLE_ITEMS: Array<Item> = [
@@ -83,6 +89,59 @@ export async function getItemById(id: string): Promise<Item | null> {
 
   const sampleMatch = SAMPLE_ITEMS.find((item) => item.id === id);
   return sampleMatch || null;
+}
+
+export async function getPriceHistoryByItemId(
+  itemId: string
+): Promise<Array<PriceHistoryRecord>> {
+  try {
+    const records = await db
+      .select()
+      .from(priceHistory)
+      .where(eq(priceHistory.itemId, itemId))
+      .orderBy(asc(priceHistory.recordedAt));
+
+    if (records.length > 0) {
+      return records as Array<PriceHistoryRecord>;
+    }
+  } catch {
+    console.warn(
+      `[Items Service] DB query failed for priceHistory of ${itemId}. Fallback generating sample history.`
+    );
+  }
+
+  return generateSamplePriceHistory(itemId);
+}
+
+function generateSamplePriceHistory(itemId: string): Array<PriceHistoryRecord> {
+  const item = SAMPLE_ITEMS.find((i) => i.id === itemId);
+  const currentPrice = item?.currentPrice || 1980;
+  const listPrice = item?.listPrice || 2980;
+
+  const now = new Date();
+  const history: Array<PriceHistoryRecord> = [];
+
+  const points = [
+    { daysAgo: 90, price: listPrice },
+    { daysAgo: 60, price: listPrice },
+    { daysAgo: 45, price: Math.round((listPrice + currentPrice) / 2) },
+    { daysAgo: 30, price: listPrice },
+    { daysAgo: 14, price: currentPrice },
+    { daysAgo: 0, price: currentPrice },
+  ];
+
+  for (let i = 0; i < points.length; i++) {
+    const pt = points[i];
+    const date = new Date(now.getTime() - pt.daysAgo * 24 * 60 * 60 * 1000);
+    history.push({
+      id: `sample_ph_${itemId}_${i}`,
+      itemId,
+      price: pt.price,
+      recordedAt: date,
+    });
+  }
+
+  return history;
 }
 
 export async function getItems(params: GetItemsParams = {}): Promise<GetItemsResult> {

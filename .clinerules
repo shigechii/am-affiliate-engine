@@ -29,5 +29,7 @@
 ## 6. TypeScript & React Coding Conventions
 - Standardize on using `Array<Type>` instead of `Type[]` for array type declarations (e.g., `Array<string>`, `Array<DmmItem>`).
 - Direct declaration of `children: React.ReactNode` is prohibited. Always use `PropsWithChildren` or `PropsWithChildren<Props>` for React components accepting children.
+- Test files must use the `*.test.ts` or `*.spec.ts` naming convention and be placed in the `tests/` directory.
+
 
 
