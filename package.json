@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "pnpm tsx tests/dmm-client.test.ts && pnpm tsx tests/items-service.test.ts && pnpm tsx tests/item-detail.test.ts && pnpm tsx tests/price-history.test.ts",
     "lint": "eslint .",
     "lint:fix": "next lint --fix",
     "format": "prettier --write .",
