@@ -15,28 +15,24 @@
 - Execute commands non-interactively (no prompts waiting for user input) and default to `pnpm`.
 
 ## 4. Verification & Quality Assurance Rules
-- After code changes, always run the following locally and ensure it passes:
-  `pnpm lint && pnpm build`
-- If errors occur, analyze the error logs autonomously and iterate on fixes until all checks pass.
+- After code changes, always run the following - After code changes, always run the following - After code changes, always run thlyze the error logs autonomously and iterate on fixes until all checks pass.
 
 ## 5. Pull Request Rules
 - Always set the target (base) branch to `dev` (`--base dev`).
 - Match the PR title to the issue title.
 - The first line of the PR body must state: `Closes #<issue-number>`
-- Command template:
-  `gh pr create --base dev --title "..." --body "Closes #<number> ... [Summary and Test Results]"`
+- When creating a PR, always assign the appropriate labels corresponding to the Issue (e.g., --label "enhancement,infra").
+- If a milestone is active, apply it using the --milestone flag.
 
 ## 6. TypeScript & React Coding Conventions
 - Standardize on using `Array<Type>` instead of `Type[]` for array type declarations (e.g., `Array<string>`, `Array<DmmItem>`).
 - Direct declaration of `children: React.ReactNode` is prohibited. Always use `PropsWithChildren` or `PropsWithChildren<Props>` for React components accepting children.
 - Test files must use the `*.test.ts` or `*.spec.ts` naming convention and be placed in the `tests/` directory.
+- When configuring `package.json` scripts (test, lint, etc.), always use glob patterns (e.g., `tests/*.test.ts`, `eslint .`) rather than listing individual filenames.
+- Automation scripts should be designed to handle dynamic file discovery.
 
-
-
-
-## 5. Pull Request Rules (Updated)
-- Always set the target (base) branch to 'dev' (--base dev).
-- Match the PR title to the issue title.
-- The first line of the PR body must state: Closes #<issue-number>
-- When creating a PR, always assign the appropriate labels corresponding to the Issue (e.g., --label "enhancement,infra").
-- If a milestone is active, apply it using the --milestone flag.
+## 7. Operational Integrity & Verification Rules
+- **Direct Commits**: When instructed to perform a "direct commit" (direct push to dev), strictly do so without creating issues or branches.
+- **Verification Loop**: After every commit/push, you MUST verify the remote state (e.g., check git status, verify commit status via CLI).
+- **Conflict Management**: Before any merge or push, always execute git fetch and git pull to ensure the local repository is in sync with the remote.
+- **Truth Verification**: Do not claim success until verification commands confirm the action is complete. If a command fails, report the error, analyze it, and wait for further instructions; never ignore errors.
