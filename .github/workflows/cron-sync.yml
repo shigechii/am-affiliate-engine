@@ -29,4 +29,4 @@ jobs:
           X_API_KEY: ${{ secrets.X_API_KEY }}
           X_API_SECRET: ${{ secrets.X_API_SECRET }}
           X_ACCESS_TOKEN: ${{ secrets.X_ACCESS_TOKEN }}
-          X_ACCESS_TOKEN_SECRET: ${{ se          X_ACCESS_TOKEC          X_ACCESS_TOKEUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+          X_ACCESS_TOKEN_SECRET: ${{ secrets.X_ACCESS_TOKEN_SEC          X_ACCESS_TOKEN_LIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
