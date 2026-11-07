@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getItemById } from "@/lib/items/service";
+import { getItemById, getPriceHistoryByItemId } from "@/lib/items/service";
+import { PriceHistoryChart } from "@/components/PriceHistoryChart";
 
 interface PageProps {
   params: Promise<{
@@ -48,6 +49,8 @@ export default async function ItemDetailPage({ params }: PageProps) {
   if (!item) {
     notFound();
   }
+
+  const priceHistory = await getPriceHistoryByItemId(id);
 
   const discount = item.discountRate || 0;
   const currentPrice = item.currentPrice
@@ -188,6 +191,14 @@ export default async function ItemDetailPage({ params }: PageProps) {
               </p>
             </div>
           </div>
+        </div>
+
+        {/* Price History Chart Section */}
+        <div className="mt-8">
+          <PriceHistoryChart
+            history={priceHistory}
+            currentPrice={item.currentPrice}
+          />
         </div>
 
         {/* Detailed Specs Section */}
