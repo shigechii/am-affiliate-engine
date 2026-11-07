@@ -41,3 +41,8 @@
 - **Zero-Tolerance for Fake Reports**: NEVER claim success if the operation has not been verified by a subsequent confirmation command (e.g., git log, git status).
 - **Proactive Verification**: Before reporting success to the user, you must run at least one command that proves the state on the remote/repository has changed as expected.
 - **Immediate Error Correction**: If a commit or push fails, do not attempt to hide it; report the failure precisely and ask for guidance.
+
+## 9. Documentation & Issue Sync Rules
+- When referencing a document in an Issue, always include the full file path (e.g., docs/strategy/COMPETITOR_ANALYSIS.md).
+- Before creating an issue, the agent MUST read the referenced file to verify the content exists and is readable.
+- If a file content is empty or contains placeholders (e.g., ???), it must be fixed BEFORE creating the issue.
