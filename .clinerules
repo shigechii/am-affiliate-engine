@@ -36,3 +36,8 @@
 - **Verification Loop**: After every commit/push, you MUST verify the remote state (e.g., check git status, verify commit status via CLI).
 - **Conflict Management**: Before any merge or push, always execute git fetch and git pull to ensure the local repository is in sync with the remote.
 - **Truth Verification**: Do not claim success until verification commands confirm the action is complete. If a command fails, report the error, analyze it, and wait for further instructions; never ignore errors.
+
+## 8. Anti-Fake Policy (Truth Verification)
+- **Zero-Tolerance for Fake Reports**: NEVER claim success if the operation has not been verified by a subsequent confirmation command (e.g., git log, git status).
+- **Proactive Verification**: Before reporting success to the user, you must run at least one command that proves the state on the remote/repository has changed as expected.
+- **Immediate Error Correction**: If a commit or push fails, do not attempt to hide it; report the failure precisely and ask for guidance.
