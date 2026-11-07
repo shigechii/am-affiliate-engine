@@ -33,3 +33,10 @@
 
 
 
+
+## 5. Pull Request Rules (Updated)
+- Always set the target (base) branch to 'dev' (--base dev).
+- Match the PR title to the issue title.
+- The first line of the PR body must state: Closes #<issue-number>
+- When creating a PR, always assign the appropriate labels corresponding to the Issue (e.g., --label "enhancement,infra").
+- If a milestone is active, apply it using the --milestone flag.
