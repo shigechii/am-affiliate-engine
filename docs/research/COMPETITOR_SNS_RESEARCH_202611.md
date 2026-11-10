@@ -2,13 +2,16 @@
 
 本ドキュメントは、FANZA/DMMアフィリエイトにおいて実運用されている個人アフィリエイトアカウントを対象とした詳細分析、および自動化エンジン構築に向けた深掘り調査結果である。
 
+## 調査基準
+- アフィリエイト投稿率: 70%以上（実運用されているアフィリエイト活動を重視）
+- 対象ジャンル: 実写アダルトアフィリエイト特化（二次元コンテンツは対象外）
+
 ## 1. 調査対象アカウント（実在確認済み・アフィリエイト活動中）
 1. @fanza_maple (https://x.com/fanza_maple)
 2. @zyosi_4545 (https://x.com/zyosi_4545)
 3. @tsukitsukisima (https://x.com/tsukitsukisima)
 4. @xykoak (https://x.com/xykoak)
 5. @ZaisRivermore (https://x.com/ZaisRivermore)
-6. @fanza_doujin (https://x.com/fanza_doujin)
 
 ### 備考（公式参考アカウント）
 - @Fanza_campaign (https://x.com/Fanza_campaign): セール情報の公式配信アカウント。キャンペーン動向・セール情報の取得元として有用。
