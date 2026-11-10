@@ -37,6 +37,12 @@
 - **Conflict Management**: Before any merge or push, always execute git fetch and git pull to ensure the local repository is in sync with the remote.
 - **Truth Verification**: Do not claim success until verification commands confirm the action is complete. If a command fails, report the error, analyze it, and wait for further instructions; never ignore errors.
 
+## 8. Development & Verification Process
+- **Pre-Commit Verification**: After any file edit, explicitly verify the change using `cat` or equivalent command before staging.
+- **Post-Commit Verification**: After every commit or push, execute `git status` or `git log -1` to confirm the operation was successful and the state is as expected.
+- **Pre-PR Validation**: Before opening a PR, perform a final audit of the changed files to ensure consistency and correctness.
+
+
 ## 8. Anti-Fake Policy (Truth Verification)
 - **Zero-Tolerance for Fake Reports**: NEVER claim success if the operation has not been verified by a subsequent confirmation command (e.g., git log, git status).
 - **Proactive Verification**: Before reporting success to the user, you must run at least one command that proves the state on the remote/repository has changed as expected.
