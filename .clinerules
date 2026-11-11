@@ -15,7 +15,7 @@
 - Execute commands non-interactively (no prompts waiting for user input) and default to `pnpm`.
 
 ## 4. Verification & Quality Assurance Rules
-- After code changes, always run the following - After code changes, always run the following - After code changes, always run thlyze the error logs autonomously and iterate on fixes until all checks pass.
+- After any code change, verify error logs autonomously and iterate on fixes until all checks pass.
 
 ## 5. Pull Request Rules
 - Always set the target (base) branch to `dev` (`--base dev`).
@@ -38,17 +38,19 @@
 - **Truth Verification**: Do not claim success until verification commands confirm the action is complete. If a command fails, report the error, analyze it, and wait for further instructions; never ignore errors.
 
 ## 8. Development & Verification Process
-- **Pre-Commit Verification**: After any file edit, explicitly verify the change using `cat` or equivalent command before staging.
+- **Pre-Commit Verification**: 
+  - After any file edit, explicitly verify the change using `cat` or equivalent command before staging.
+  - If a file edit fails to apply (e.g., no replacement performed), STOP and investigate; do NOT commit or push partial/failed states.
 - **Post-Commit Verification**: After every commit or push, execute `git status` or `git log -1` to confirm the operation was successful and the state is as expected.
-- **Pre-PR Validation**: Before opening a PR, perform a final audit of the changed files to ensure consistency and correctness.
+- **Pre-PR Validation**: Before opening a PR, perform a final audit of the changed files and the last commit log to ensure consistency and correctness.
+- **Commit History Hygiene**: Ensure commit messages are meaningful. If a commit attempt fails or requires retries, use `git reset` or `git commit --amend` to maintain a clean history. Never push "fix" or "retry" commits unless necessary for remote sync.
 
-
-## 8. Anti-Fake Policy (Truth Verification)
-- **Zero-Tolerance for Fake Reports**: NEVER claim success if the operation has not been verified by a subsequent confirmation command (e.g., git log, git status).
+## 9. Anti-Fake Policy (Truth Verification)
+- **Zero-Tolerance for Fake Reports**: NEVER claim success if the operation has not been verified by a subsequent confirmation command.
 - **Proactive Verification**: Before reporting success to the user, you must run at least one command that proves the state on the remote/repository has changed as expected.
 - **Immediate Error Correction**: If a commit or push fails, do not attempt to hide it; report the failure precisely and ask for guidance.
 
-## 9. Documentation & Issue Sync Rules
-- When referencing a document in an Issue, always include the full file path (e.g., docs/strategy/COMPETITOR_ANALYSIS.md).
+## 10. Documentation & Issue Sync Rules
+- When referencing a document in an Issue, always include the full file path.
 - Before creating an issue, the agent MUST read the referenced file to verify the content exists and is readable.
-- If a file content is empty or contains placeholders (e.g., ???), it must be fixed BEFORE creating the issue.
+- If a file content is empty or contains placeholders, it must be fixed BEFORE creating the issue.
